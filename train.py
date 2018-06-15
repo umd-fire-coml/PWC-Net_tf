@@ -74,7 +74,7 @@ class Trainer(object):
         self.saver = tf.train.Saver()
 
         if self.args.resume is not None:
-            print('Loading learned model from checkpoint {self.args.resume}')
+            print(f'Loading learned model from checkpoint {self.args.resume}')
             self.saver.restore(self.sess, self.args.resume)
         else:
             self.sess.run(tf.global_variables_initializer())
@@ -106,7 +106,7 @@ class Trainer(object):
                 epe_evals.append(epe_eval)
                 
             g_step = self.sess.run(self.global_step)
-            print('\r{e+1} epoch evaluation, loss: {np.mean(loss_evals)}, epe: {np.mean(epe_evals)}, global step: {g_step}.')
+            print(f'\r{e+1} epoch evaluation, loss: {np.mean(loss_evals)}, epe: {np.mean(epe_evals)}, global step: {g_step}.')
             
             # visualize estimated optical flow
             if self.args.visualize:
@@ -185,7 +185,7 @@ if __name__ == '__main__':
     
     args = parser.parse_args()
     for key, item in vars(args).items():
-        print('{key} : {item}')
+        print(f'{key} : {item}')
 
     # os.environ['CUDA_VISIBLE_DEVICES'] = input('Input utilize gpu-id (-1:cpu) : ')
 
