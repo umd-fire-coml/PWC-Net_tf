@@ -163,9 +163,9 @@ class Sintel(BaseDataset):
         p_flow = p / 'training/flow'
         samples = []
 
-        collections_of_scenes = sorted(map(str, p_img.glob('**/*.png')))
+        collections_of_scenes = sorted(list(map(str, p_img.glob('**/*.png'))))
         from itertools import groupby
-        collections = [list(g) for k, g in groupby(collections_of_scenes, lambda x: x.split('/')[-2])]
+        collections = [list(g) for k, g in groupby(collections_of_scenes, lambda x: x.split('\\')[-2])]
 
         samples = [(*i, i[0].replace(self.mode, 'flow').replace('.png', '.flo')) for collection in collections for i in window(collection, 2)]
         self.split(samples)

@@ -74,7 +74,7 @@ class Trainer(object):
         self.saver = tf.train.Saver()
 
         if self.args.resume is not None:
-            print(f'Loading learned model from checkpoint {self.args.resume}')
+            print('Loading learned model from checkpoint {self.args.resume}')
             self.saver.restore(self.sess, self.args.resume)
         else:
             self.sess.run(tf.global_variables_initializer())
@@ -106,7 +106,7 @@ class Trainer(object):
                 epe_evals.append(epe_eval)
                 
             g_step = self.sess.run(self.global_step)
-            print(f'\r{e+1} epoch evaluation, loss: {np.mean(loss_evals)}, epe: {np.mean(epe_evals)}, global step: {g_step}.')
+            print('\r{e+1} epoch evaluation, loss: {np.mean(loss_evals)}, epe: {np.mean(epe_evals)}, global step: {g_step}.')
             
             # visualize estimated optical flow
             if self.args.visualize:
@@ -116,11 +116,11 @@ class Trainer(object):
                 flow_gt = flows_gt_eval[0]
                 images_e = images_eval[0]
                 vis_flow_pyramid(flow_pyramid, flow_gt, images_e,
-                                 f'./figure/flow_{str(e+1).zfill(4)}.pdf')
+                                 './figure/flow_{str(e+1).zfill(4)}.pdf')
 
             if not os.path.exists('./model'):
                 os.mkdir('./model')
-            self.saver.save(self.sess, f'./model/model_{e+1}.ckpt')
+            self.saver.save(self.sess, './model/model_{e+1}.ckpt')
         
 
 if __name__ == '__main__':
@@ -166,7 +166,7 @@ if __name__ == '__main__':
                         help = 'Loss function choice in [multiscale/robust]')
     parser.add_argument('--lr', type = float, default = 1e-4,
                         help = 'Learning rate [1e-4]')
-    parser.add_argument('--lr_scheduling', action = 'store_true',
+    parser.add_argument('--lr_scheduling', action = 'store_true', default = True,
                         help = 'Learning rate scheduling option by piecewise constant')
     parser.add_argument('--weights', nargs = '+', type = float,
                         default = [0.32, 0.08, 0.02, 0.01, 0.005],
@@ -185,9 +185,9 @@ if __name__ == '__main__':
     
     args = parser.parse_args()
     for key, item in vars(args).items():
-        print(f'{key} : {item}')
+        print('{key} : {item}')
 
-    os.environ['CUDA_VISIBLE_DEVICES'] = input('Input utilize gpu-id (-1:cpu) : ')
+    # os.environ['CUDA_VISIBLE_DEVICES'] = input('Input utilize gpu-id (-1:cpu) : ')
 
     trainer = Trainer(args)
     trainer.train()
