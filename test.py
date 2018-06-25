@@ -50,11 +50,13 @@ if __name__ == '__main__':
                         help = 'Target images (required)')
     parser.add_argument('--resume', type =  str, default = None,
                         help = 'Learned parameter checkpoint file [None]')
+	parser.add_argument('--device', type =  str, default = -1,
+                        help = 'Input utilize gpu-id (-1:cpu)')
     args = parser.parse_args()
     for key, item in vars(args).items():
         print(f'{key} : {item}')
 
-    os.environ['CUDA_VISIBLE_DEVICES'] = input('Input utilize gpu-id (-1:cpu) : ')
+    os.environ['CUDA_VISIBLE_DEVICES'] = args.device
 
     tester = Tester(args)
     tester.test()
