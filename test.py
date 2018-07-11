@@ -55,7 +55,7 @@ if __name__ == '__main__':
     for key, item in vars(args).items():
         print(f'{key} : {item}')
 
-    os.environ['CUDA_VISIBLE_DEVICES'] = args.device
+    # os.environ['CUDA_VISIBLE_DEVICES'] = args.device
 
     tester = Tester(args)
     tester.test()
